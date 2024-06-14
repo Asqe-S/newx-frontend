@@ -83,7 +83,7 @@ const SignInForm = ({ role }: TRole) => {
       </div>
 
       <div className="text-center">
-        <Button disabled={isPending} className="btn-default btn btn-size w-1/2">
+        <Button disabled={isPending} className="w-1/2">
           {isPending && (
             <>
               <RotateCw className="rotate" />

@@ -48,9 +48,13 @@ export type TRegisterField = {
   label: "Username" | "Password" | "Email" | "Confirm password";
 };
 
-
 export type TAuthSubmit = {
   formData: any;
   role: TRole["role"];
   type: "register" | "login";
 };
+
+export type Targs = {
+  formData: any;
+  type: "verify-otp" | "reset-password";
+} & TUidToken;

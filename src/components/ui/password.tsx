@@ -43,7 +43,7 @@ const PasswordField = ({
           autoFocus={focus}
           id={name}
           className={`input ${
-            error ? "border-red-500 focus-visible:ring-red-700" : ""
+            error ? "border-red-500 focus-visible:ring-red-700 focus-visible:ring-offset-red-400" : ""
           }`}
           {...register(name)}
         />

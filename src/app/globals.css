@@ -70,14 +70,14 @@
     @apply hidden;
   }
   * {
-    @apply border-border focus-visible:outline-none focus-visible:bg-yellow-500 focus-visible:text-black;
+    @apply border-border focus-visible:outline-none focus-visible:bg-yellow-500 ;
   }
   body {
     @apply bg-background text-foreground max-w-[95rem] mx-auto;
   }
 
   .btn {
-    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors   disabled:pointer-events-none disabled:opacity-50;
   }
   .btn-default {
     @apply bg-primary text-primary-foreground shadow hover:bg-primary/90;
@@ -89,7 +89,7 @@
     @apply hover:bg-accent hover:text-accent-foreground;
   }
   .btn-link {
-    @apply text-primary underline-offset-4 hover:underline;
+    @apply text-primary underline-offset-4 hover:underline focus-visible:bg-background;
   }
   .btn-small {
     @apply h-8 rounded-md px-3 text-xs;
@@ -105,9 +105,8 @@
   .label {
     @apply text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
   }
-
   .input {
-    @apply flex h-8 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50;
+    @apply flex h-8 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground  focus-visible:ring-1 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .auth-head {
@@ -115,16 +114,14 @@
   }
 
   .link {
-  @apply text-indigo-700 font-medium underline-offset-4 hover:underline;
-}
+    @apply text-indigo-700 font-medium underline-offset-4 hover:underline ;
+  }
 
+  .form {
+    @apply space-y-6 w-11/12 max-w-sm mx-auto;
+  }
 
-.form {
-  @apply space-y-6 w-11/12 max-w-sm mx-auto;
-}
-
-.rotate{
-  @apply me-1 size-4 animate-spin
-}
-
+  .rotate {
+    @apply me-1 size-4 animate-spin;
+  }
 }

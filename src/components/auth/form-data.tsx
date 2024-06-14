@@ -47,3 +47,9 @@ export const RegisterSchema = z
         "Invalid password format. It must be 8-30 characters long and include at least one lowercase letter, one uppercase letter, and one digit.",
     }),
   });
+
+  export const VerifyOtpSchema = z.object({
+    otp: z.string().regex(otpRegex, {
+      message: "Please provide a valid 6-digit OTP.",
+    }),
+  });
