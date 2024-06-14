@@ -3,6 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import Navbar from "@/components/navbar";
+import QueryProvider from "@/components/query";
+import { ToastContainer, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,8 +31,21 @@ export default function RootLayout({
         >
           <div id="modal"></div>
           <Navbar />
-          <div className="min-h-screen p-1">{children}</div>
+          <QueryProvider>
+            <div className="min-h-screen p-1">{children}</div>
+          </QueryProvider>
         </ThemeProvider>
+        <ToastContainer
+          theme="colored"
+          stacked
+          hideProgressBar
+          closeOnClick
+          draggable
+          transition={Zoom}
+          pauseOnHover
+          position="top-center"
+          limit={3}
+        />
       </body>
     </html>
   );

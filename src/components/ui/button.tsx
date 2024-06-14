@@ -1,15 +1,8 @@
 "use client";
-import { motion, MotionProps } from "framer-motion";
+import { motion } from "framer-motion";
+import { TButtonProps } from "../types";
 
-type ButtonProps = {
-  variant?: "btn-default" | "btn-destructive" | "btn-ghost" | "btn-link";
-  size?: "btn-small" | "btn-icon";
-  className?: string;
-  children: React.ReactNode;
-} & React.ButtonHTMLAttributes<HTMLButtonElement> &
-  MotionProps;
-
-const Button: React.FC<ButtonProps> = ({
+const Button: React.FC<TButtonProps> = ({
   variant = "btn-default",
   size = "btn-small",
   className = "",
