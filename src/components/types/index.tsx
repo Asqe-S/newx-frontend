@@ -58,3 +58,9 @@ export type Targs = {
   formData: any;
   type: "verify-otp" | "reset-password";
 } & TUidToken;
+
+export type Ttoken = {
+  exp?: number;
+  role?: string;
+  is_blocked?: boolean;
+};

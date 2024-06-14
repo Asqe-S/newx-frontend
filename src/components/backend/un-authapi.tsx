@@ -2,12 +2,63 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
-import { TAuthSubmit, Targs } from "../types";
+import { TAuthSubmit, Targs, Ttoken } from "../types";
+import { saveToken } from "../auth/signin";
 
 export const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 export const axiosApi = axios.create({
   baseURL,
 });
+
+
+const refreshAccessToken = async (refreshToken: string) => {
+  try {
+    const { data } = await axios.post(`${baseURL}auth/refresh/`, {
+      refresh: refreshToken,
+    });
+    const { access, refresh } = data;
+    saveToken("access", access);
+    saveToken("refresh", refresh);
+    return access;
+  } catch (error) {
+    throw new Error("Failed to refresh access token");
+  }
+};
+
+axiosApi.interceptors.request.use(async (config) => {
+  const access = Cookies.get("access");
+  const refresh = Cookies.get("refresh");
+
+  if (!access || !refresh) {
+    return config;
+  }
+
+  try {
+    const decodedAccessToken: Ttoken = jwtDecode(access);
+
+    if (!decodedAccessToken.exp) {
+      return config;
+    }
+
+    const expired =
+      new Date().getTime() >= decodedAccessToken.exp * 1000 - 3 * 60 * 1000;
+
+    if (expired) {
+      console.log("Token expired. Refreshing...");
+      const newAccessToken = await refreshAccessToken(refresh);
+      config.headers.Authorization = `Bearer ${newAccessToken}`;
+    } else {
+      config.headers.Authorization = `Bearer ${access}`;
+    }
+
+    return config;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+});
+
+
+
 
 
 export const errorHandle = (error: any) => {
