@@ -1,16 +1,16 @@
-'use client'
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { RegisterSchema, registerField } from './form-data';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
-import { TRole } from '../types';
-import { authSubmit } from '../backend/un-auth';
-import PasswordField from '../ui/password';
-import Input from '../ui/input';
-import { RotateCw } from 'lucide-react';
-import Button from '../ui/button';
+"use client";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { RegisterSchema, registerField } from "./form-data";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { TRole } from "../types";
+import { authSubmit } from "../backend/un-authapi";
+import PasswordField from "../ui/password";
+import Input from "../ui/input";
+import { RotateCw } from "lucide-react";
+import Button from "../ui/button";
 
 const RegisterForm = ({ role }: TRole) => {
   const router = useRouter();
@@ -66,13 +66,10 @@ const RegisterForm = ({ role }: TRole) => {
           </div>
         ))}
         <div className="text-center">
-          <Button
-            disabled={isPending}
-            className='w-1/2'
-          >
+          <Button disabled={isPending} className="w-1/2">
             {isPending ? (
               <>
-                <RotateCw className="rotate" />
+                <RotateCw className="rotate-icon" />
                 <span className="animate-pulse">Creating ...</span>
               </>
             ) : (
@@ -85,4 +82,4 @@ const RegisterForm = ({ role }: TRole) => {
   );
 };
 
-export default RegisterForm
+export default RegisterForm;

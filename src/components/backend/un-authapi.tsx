@@ -61,3 +61,12 @@ export const otpandPasswordSubmit = async ({
     throw error;
   }
 };
+export const forgotPassSubmit = async (formData: any) => {
+  try {
+    const response = await axiosApi.post("auth/forgot-password/", formData);
+    return response;
+  } catch (error) {
+    errorHandle(error);
+    throw error;
+  }
+};

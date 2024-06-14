@@ -37,19 +37,40 @@ export const RegisterSchema = z
     path: ["confirm_password"],
   });
 
-  export const SignInSchema = z.object({
-    username: z.string().regex(combinedRegex, {
-      message: "Please provide a valid username or email.",
-    }),
+export const SignInSchema = z.object({
+  username: z.string().regex(combinedRegex, {
+    message: "Please provide a valid username or email.",
+  }),
 
+  password: z.string().regex(passwordRegex, {
+    message:
+      "Invalid password format. It must be 8-30 characters long and include at least one lowercase letter, one uppercase letter, and one digit.",
+  }),
+});
+
+export const VerifyOtpSchema = z.object({
+  otp: z.string().regex(otpRegex, {
+    message: "Please provide a valid 6-digit OTP.",
+  }),
+});
+
+export const ForgotPassSchema = z.object({
+  username: z.string().regex(combinedRegex, {
+    message: "Please provide a valid username.",
+  }),
+});
+
+export const ChangePasswordSchema = z
+  .object({
     password: z.string().regex(passwordRegex, {
       message:
         "Invalid password format. It must be 8-30 characters long and include at least one lowercase letter, one uppercase letter, and one digit.",
     }),
-  });
-
-  export const VerifyOtpSchema = z.object({
-    otp: z.string().regex(otpRegex, {
-      message: "Please provide a valid 6-digit OTP.",
+    confirm_password: z.string().regex(passwordRegex, {
+      message: "Invalid password format.",
     }),
+  })
+  .refine((data) => data.password === data.confirm_password, {
+    message: "Oops! Confirm password doesn't match",
+    path: ["confirm_password"],
   });

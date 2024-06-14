@@ -1,6 +1,6 @@
 "use client";
 import { VerifyOtpSchema } from "@/components/auth/form-data";
-import { checkUidToken, otpandPasswordSubmit } from "@/components/backend/un-auth";
+import { checkUidToken, otpandPasswordSubmit } from "@/components/backend/un-authapi";
 import {Loading} from "@/components/manage/loading";
 import { TParams } from "@/components/types";
 import Button from "@/components/ui/button";
@@ -84,7 +84,7 @@ const Verify = ({ params: { uid, token } }: TParams) => {
           >
             {verifyOtp.isPending && (
               <>
-                <RotateCw className="rotate" />
+                <RotateCw className="rotate-icon" />
               </>
             )}
             Verify
@@ -103,7 +103,7 @@ const Verify = ({ params: { uid, token } }: TParams) => {
       >
         {resendOtp.isPending ? (
           <>
-            <RotateCw className="rotate" />
+            <RotateCw className="rotate-icon" />
             <span className="animate-pulse">Resending Otp ...</span>
           </>
         ) : (
