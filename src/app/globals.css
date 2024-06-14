@@ -70,7 +70,7 @@
     @apply hidden;
   }
   * {
-    @apply border-border focus-visible:outline-none focus-visible:bg-yellow-500 ;
+    @apply border-border focus-visible:outline-none focus-visible:bg-yellow-500;
   }
   body {
     @apply bg-background text-foreground max-w-[95rem] mx-auto;
@@ -89,7 +89,7 @@
     @apply hover:bg-accent hover:text-accent-foreground;
   }
   .btn-link {
-    @apply text-primary underline-offset-4 hover:underline focus-visible:bg-background;
+    @apply text-primary underline-offset-4 hover:underline focus-visible:bg-transparent focus-visible:underline;
   }
   .btn-small {
     @apply h-8 rounded-md px-3 text-xs;
@@ -114,7 +114,7 @@
   }
 
   .link {
-    @apply text-indigo-700 font-medium underline-offset-4 hover:underline ;
+    @apply text-indigo-700 font-medium underline-offset-4 hover:underline;
   }
 
   .form {

@@ -8,7 +8,7 @@ export type TChildren = {
 export type TModalProps = {
   children: TChildren["children"];
   isOpen: boolean;
-  variant: "NavbarVariant" | "ModalVariant";
+  variant?: "NavbarVariant" | "ModalVariant";
 };
 
 export type TButtonProps = {
@@ -63,4 +63,10 @@ export type Ttoken = {
   exp?: number;
   role?: string;
   is_blocked?: boolean;
+};
+
+export type TProfileProps = {
+  close?: () => void;
+  updateUser?: any;
+  profile_picture?: string;
 };

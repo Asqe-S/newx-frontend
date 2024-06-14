@@ -30,7 +30,7 @@ const variants = {
   },
 };
 
-const Modal = ({ isOpen, children, variant }: TModalProps) => {
+const Modal = ({ isOpen, children, variant = "ModalVariant" }: TModalProps) => {
   const [showModal, setModal] = useState(false);
   const modalRef = useRef<HTMLElement | null>(null);
 
@@ -43,7 +43,7 @@ const Modal = ({ isOpen, children, variant }: TModalProps) => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === "Tab" && modalRef.current) {
         const focusableElements = modalRef.current.querySelectorAll(
-          'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), details:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          'a[href], button:not([disabled]), input:not([disabled]):not(.hidden), textarea:not([disabled]), select:not([disabled]), details:not([disabled]), [tabindex]:not([tabindex="-1"]), label'
         );
         if (focusableElements.length > 0) {
           const firstElement = focusableElements[0] as HTMLElement;
@@ -78,7 +78,7 @@ const Modal = ({ isOpen, children, variant }: TModalProps) => {
         createPortal(
           <AnimatePresence>
             {isOpen && (
-              <div className="fixed inset-0 z-50 bg-black/60 ">
+              <div className="fixed inset-0 z-50 bg-black/60">
                 <motion.div
                   variants={variants[variant]}
                   initial="initial"
