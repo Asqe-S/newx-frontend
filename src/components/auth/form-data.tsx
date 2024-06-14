@@ -36,3 +36,14 @@ export const RegisterSchema = z
     message: "Oops! Confirm password doesn't match",
     path: ["confirm_password"],
   });
+
+  export const SignInSchema = z.object({
+    username: z.string().regex(combinedRegex, {
+      message: "Please provide a valid username or email.",
+    }),
+
+    password: z.string().regex(passwordRegex, {
+      message:
+        "Invalid password format. It must be 8-30 characters long and include at least one lowercase letter, one uppercase letter, and one digit.",
+    }),
+  });

@@ -21,7 +21,10 @@ const PasswordField = ({
           >
             {label}
           </label>
-          <Link className="link " href={"/auth/forgot-password"}>
+          <Link
+            className="link text-sm font-medium "
+            href={"/auth/forgot-password"}
+          >
             forgot password?.
           </Link>
         </div>
