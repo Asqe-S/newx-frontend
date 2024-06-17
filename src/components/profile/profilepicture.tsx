@@ -12,7 +12,7 @@ const ProfilePicture = ({
   const [picture, setPicture] = useState<File | null>();
   return (
     <>
-      <div className="sticky-top flex items-center justify-around">
+      <div className="sticky-top ">
         <Button
           variant="btn-link"
           autoFocus

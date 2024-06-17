@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar";
 import QueryProvider from "@/components/query";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Hoc from "@/components/ui/hoc";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,7 +33,9 @@ export default function RootLayout({
           <div id="modal"></div>
           <Navbar />
           <QueryProvider>
-            <div className="min-h-screen p-1">{children}</div>
+            <div className="min-h-screen py-1 px-2">
+              <Hoc>{children}</Hoc>
+            </div>
           </QueryProvider>
         </ThemeProvider>
         <ToastContainer

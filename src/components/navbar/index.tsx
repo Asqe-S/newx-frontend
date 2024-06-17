@@ -31,7 +31,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="sticky-top flex items-center justify-around">
+      <header className="sticky-top flex items-center justify-around ">
         <Link className="text-2xl" href={link}>
           NEWX
         </Link>

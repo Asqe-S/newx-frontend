@@ -15,17 +15,6 @@ import UpdatePassword from "./updatepassword";
 import DeleteAccount, { RemoveToken } from "./deleteaccount";
 import { TRole } from "../types";
 import { motion } from "framer-motion";
-// const aaa = {
-//   initial: {
-//     y: -100,
-//     opacity: 0,
-//   },
-//   animate: {
-//     opacity: 1,
-//     y: 0,
-//   },
-//   exit: { y: -100, opacity: 0 },
-// };
 
 const Profile = ({ role }: TRole) => {
   const queryClient = useQueryClient();
@@ -81,8 +70,8 @@ const Profile = ({ role }: TRole) => {
           scale: 1,
           opacity: 1,
           transition: {
-            duration: .5,
-            delay: .5,
+            duration: 0.5,
+            delay: 0.5,
           },
         }}
         className="flex flex-col items-center  space-y-2 mb-3"

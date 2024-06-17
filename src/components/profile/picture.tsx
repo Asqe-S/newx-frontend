@@ -1,15 +1,22 @@
 import { User } from "lucide-react";
 import { TProfileProps } from "../types";
+import Image from "next/image";
 
 const Picture = ({ profile_picture }: TProfileProps) => {
   return (
     <>
       {profile_picture ? (
-        <img
-          src={profile_picture}
-          className="size-full object-cover object-top"
+        <Image
           alt="profile picture"
-          loading="lazy"
+          src={profile_picture}
+          sizes="100vw"
+          priority
+          style={{
+            width: "100%",
+            height: "auto",
+          }}
+          width={500}
+          height={300}
         />
       ) : (
         <User className="w-full h-full" />

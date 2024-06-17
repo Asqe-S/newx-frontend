@@ -20,7 +20,7 @@ export type TButtonProps = {
   MotionProps;
 
 export type TRole = {
-  role: "merchant" | "superuser" | "user";
+  role?: "merchant" | "superuser" | "user";
 };
 export type TUidToken = {
   uid: string;
@@ -61,12 +61,34 @@ export type Targs = {
 
 export type Ttoken = {
   exp?: number;
-  role?: string;
   is_blocked?: boolean;
-};
+} & TRole;
 
 export type TProfileProps = {
   close?: () => void;
   updateUser?: any;
   profile_picture?: string;
+};
+
+
+
+export type TPropertyField = {
+  name: "city" | "state" | "name"  | "longitude" | "latitude";
+  type: "text";
+  label: "Name of the property" | "City" | "State" | "Longitude" | "Latitude";
+};
+
+
+export type TPropertyPhoto = {
+  id: number;
+  photo: string;
+};
+export type TProperty = {
+  city: string;
+  id: number;
+  latitude: string;
+  longitude: string;
+  name: string;
+  photos: TPropertyPhoto[];
+  state: string;
 };

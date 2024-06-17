@@ -77,10 +77,10 @@
   }
 
   .btn {
-    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors   disabled:pointer-events-none disabled:opacity-50;
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors   disabled:pointer-events-none disabled:opacity-50 focus-visible:z-50;
   }
   .btn-default {
-    @apply bg-primary text-primary-foreground shadow hover:bg-primary/90;
+    @apply bg-primary text-primary-foreground shadow hover:bg-primary/90  focus-visible:bg-background focus-visible:text-foreground;
   }
   .btn-destructive {
     @apply bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90;
@@ -99,7 +99,7 @@
   }
 
   .sticky-top {
-    @apply h-14 mb-4 sticky top-0 z-20 w-full border-b  bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60;
+    @apply h-14 mb-4 sticky top-0 z-20 w-full border-b  bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center justify-around;
   }
 
   .label {
@@ -124,4 +124,15 @@
   .rotate-icon {
     @apply me-1 size-4 animate-spin;
   }
+
+ 
+}
+
+.mapboxgl-popup-content {
+  padding: 0 !important;
+  border-radius: .75rem !important;
+  box-shadow: none !important;
+}
+.mapboxgl-popup-tip {
+  display: none;
 }
