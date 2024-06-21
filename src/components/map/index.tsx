@@ -21,8 +21,8 @@ const AddPropertyMap = ({ setValue, watch }: { setValue: any; watch: any }) => {
       if (state && city) {
         setValue("city", city);
         setValue("state", state);
-        setValue("latitude", lat);
-        setValue("longitude", lon);
+        setValue("latitude", lat.toString());
+        setValue("longitude", lon.toString());
       } else {
         toast.error("Please selecct the proper location");
       }

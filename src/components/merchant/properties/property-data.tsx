@@ -16,6 +16,6 @@ export const propertySchema = z.object({
   }),
   city: z.string(),
   state: z.string(),
-  latitude: z.number(),
-  longitude: z.number(),
+  latitude: z.string(),
+  longitude: z.string(),
 });

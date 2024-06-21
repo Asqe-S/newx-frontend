@@ -41,7 +41,7 @@ const Profile = ({ role }: TRole) => {
     queryKey: ["userData"],
     queryFn: () => fetchUserData(),
     retry: 2,
-    staleTime: 10000,
+    staleTime: 60 * 1000,
   });
 
   const updateUser = useMutation({

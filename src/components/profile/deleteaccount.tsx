@@ -17,7 +17,7 @@ const DeleteAccount = ({ close }: TProfileProps) => {
   const [inputText, setInputText] = useState("");
   const { isPending, mutate } = useMutation({
     mutationFn: DeleteUser,
-    onSuccess: () => {
+    onSuccess: (data) => {
       router.replace("/");
       RemoveToken();
     },

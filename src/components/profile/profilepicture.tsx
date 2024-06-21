@@ -22,28 +22,25 @@ const ProfilePicture = ({
           <ChevronLeft />
           Back
         </Button>
-        {!updateUser.isPending && (
-          <>
-            <Button
-              variant="btn-link"
-              onClick={() => {
-                document.getElementById("picture")?.click();
-              }}
-            >
-              {picture ? "Choose Another" : "New Pic"}
-            </Button>
+          <Button
+            disabled={updateUser.isPending}
+            variant="btn-link"
+            onClick={() => {
+              document.getElementById("picture")?.click();
+            }}
+          >
+            {picture ? "Choose Another" : "New Pic"}
+          </Button>
 
-            <input
-              className="hidden"
-              id="picture"
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                setPicture(e.target.files && e.target.files[0]);
-              }}
-            />
-          </>
-        )}
+          <input
+            className="hidden"
+            id="picture"
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              setPicture(e.target.files && e.target.files[0]);
+            }}
+          />
         {picture && (
           <Button
             variant="btn-link"

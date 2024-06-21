@@ -1,11 +1,11 @@
 "use client";
 
-import { fetchProperties } from "@/components/backend/merchapi";
+import { addProperty, fetchProperties } from "@/components/backend/merchapi";
 import { UserError } from "@/components/manage/errors";
 import { Loading } from "@/components/manage/loading";
 import Button from "@/components/ui/button";
 import Modal from "@/components/ui/modal";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import AddProperty from "./add-property";
 import { EmptyProperty } from "@/components/manage/empty-property";
@@ -19,6 +19,8 @@ import MapWithData from "@/components/map/mapwithdata";
 import { useState } from "react";
 
 const Properties = () => {
+  const queryClient = useQueryClient();
+
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -36,9 +38,19 @@ const Properties = () => {
   };
   const { data, error, isLoading } = useQuery({
     queryKey: ["fetchProperties"],
-    queryFn: fetchProperties,
+    queryFn: () => fetchProperties(),
     retry: 2,
-    staleTime: 10000,
+    staleTime: 60 * 1000,
+  });
+
+  const addProperties = useMutation({
+    mutationFn: addProperty,
+    onSuccess: (data) => {
+      router.replace(`/merchant/property/${data.id}?modal=photos`);
+      queryClient.invalidateQueries({
+        queryKey: ["fetchProperties"],
+      });
+    },
   });
 
   if (isLoading) return <Loading />;
@@ -71,8 +83,9 @@ const Properties = () => {
                 key={field.id}
                 className=""
               >
-                {field.photos.length < 1 ? <NoImage />
-                :field.photos.length > 1 ? (
+                {field.photos.length < 1 ? (
+                  <NoImage />
+                ) : field.photos.length > 1 ? (
                   <Carousel photo={field.photos} />
                 ) : (
                   <div className="min-h-48 h-48 max-h-48 w-10/12 mx-auto mb-3 ">
@@ -117,7 +130,7 @@ const Properties = () => {
       )}
 
       <Modal isOpen={searchParams.get("modal") === "add_property"}>
-        <AddProperty close={clearParams} />
+        <AddProperty close={clearParams} mutationQuery={addProperties} />
       </Modal>
     </>
   );

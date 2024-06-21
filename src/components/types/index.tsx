@@ -27,8 +27,12 @@ export type TUidToken = {
   token: string;
 };
 
+export type TId = {
+  id: number;
+};
+
 export type TParams = {
-  params: TRole & TUidToken;
+  params: TRole & TUidToken & TId;
 };
 
 export type TInputprops = {
@@ -70,14 +74,11 @@ export type TProfileProps = {
   profile_picture?: string;
 };
 
-
-
 export type TPropertyField = {
-  name: "city" | "state" | "name"  | "longitude" | "latitude";
+  name: "city" | "state" | "name" | "longitude" | "latitude";
   type: "text";
   label: "Name of the property" | "City" | "State" | "Longitude" | "Latitude";
 };
-
 
 export type TPropertyPhoto = {
   id: number;

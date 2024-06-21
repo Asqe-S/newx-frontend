@@ -1,15 +1,23 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { PropertyField, propertySchema } from "./property-data";
-import { addProperty } from "@/components/backend/merchapi";
 import Button from "@/components/ui/button";
 import { ChevronLeft, RotateCw } from "lucide-react";
 import Input from "@/components/ui/input";
 import AddPropertyMap from "@/components/map";
+import { TProperty } from "@/components/types";
 
-const AddProperty = ({ close }: { close: () => void }) => {
-  const queryClient = useQueryClient();
+const AddProperty = ({
+  id,
+  mutationQuery,
+  close,
+  data,
+}: {
+  id?: number;
+  close: () => void;
+  data?: TProperty;
+  mutationQuery: any;
+}) => {
   const {
     register,
     watch,
@@ -19,47 +27,46 @@ const AddProperty = ({ close }: { close: () => void }) => {
   } = useForm({
     resolver: zodResolver(propertySchema),
     mode: "onChange",
-    defaultValues: {
-      name: "",
-      city: "Chennai",
-      state: "Tamil Nadu ",
-      latitude: 13.0827,
-      longitude: 80.2707,
-    },
+    defaultValues: data
+      ? {
+          name: data.name,
+          city: data.city,
+          state: data.state,
+          latitude: data.latitude,
+          longitude: data.longitude,
+        }
+      : {
+          name: "",
+          city: "Chennai",
+          state: "Tamil Nadu ",
+          latitude: 13.0827,
+          longitude: 80.2707,
+        },
   });
-  const { isPending, mutate } = useMutation({
-    mutationFn: addProperty,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["fetchProperties"],
-      });
-      close();
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
-
   return (
     <>
       <div className="sticky-top">
         <Button
           variant="btn-link"
           autoFocus
-          disabled={isPending}
+          disabled={mutationQuery.isPending}
           onClick={close}
         >
           <ChevronLeft />
           Back
         </Button>
         <Button
-          disabled={isPending}
+          disabled={mutationQuery.isPending}
           variant="btn-link"
           onClick={handleSubmit((formData) => {
-            mutate(formData);
+            if (id) {
+              mutationQuery.mutate({ id: id, formData: formData });
+            } else {
+              mutationQuery.mutate({ formData: formData });
+            }
           })}
         >
-          {isPending && <RotateCw className="rotate-icon" />}
+          {mutationQuery.isPending && <RotateCw className="rotate-icon" />}
           Save
         </Button>
       </div>
