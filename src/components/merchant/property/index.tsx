@@ -39,23 +39,23 @@ const Property = ({ id }: TId) => {
 
   const { data, error, isLoading } = useQuery({
     queryKey: [`fetchProperty${id}`],
-    queryFn: () => fetchProperties(id),
+    queryFn: () => fetchProperties({ lookup: id }),
     retry: 2,
     staleTime: 60 * 1000,
   });
 
-    const updateProperty = useMutation({
-      mutationFn: PatchProperty,
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: [`fetchProperty${id}`],
-        });
-        queryClient.invalidateQueries({
-          queryKey: ["fetchProperties"],
-        });
-        clearParams();
-      },
-    });
+  const updateProperty = useMutation({
+    mutationFn: PatchProperty,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [`fetchProperty${id}`],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["fetchProperties"],
+      });
+      clearParams();
+    },
+  });
 
   const deleteProperty = useMutation({
     mutationFn: deleteProperties,
@@ -71,7 +71,15 @@ const Property = ({ id }: TId) => {
   if (error) return <UserError />;
   return (
     <>
-      <div className="flex justify-end me-3 mb-3">
+      <div className="flex justify-center me-3 mb-3">
+        <Button
+          variant="btn-link"
+          onClick={() => {
+            router.back();
+          }}
+        >
+          Back
+        </Button>
         <Button
           className="text-red-500"
           variant="btn-link"

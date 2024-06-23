@@ -39,8 +39,8 @@ const AddProperty = ({
           name: "",
           city: "Chennai",
           state: "Tamil Nadu ",
-          latitude: 13.0827,
-          longitude: 80.2707,
+          latitude: "13.0827",
+          longitude: "80.2707",
         },
   });
   return (
@@ -101,7 +101,7 @@ const AddProperty = ({
           ))}
         </div>
       </div>
-      <div className="w-11/12  h-5/6 mx-auto pb-8 mb-8">
+      <div className="w-11/12  h-full mx-auto pb-8 mb-8">
         <AddPropertyMap setValue={setValue} watch={watch} />
       </div>
     </>

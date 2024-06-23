@@ -1,12 +1,20 @@
 import { axiosApi, errorHandle } from "./un-authapi";
 
-export const fetchProperties = async (lookup?: string | number) => {
+export const fetchProperties = async ({
+  lookup,
+  page='1',
+}: {
+  lookup?: string | number;
+  page?:string;
+}) => {
   try {
     if (lookup) {
       const { data } = await axiosApi.get(`properties/${lookup}`);
       return data;
     } else {
-      const { data } = await axiosApi.get("properties/");
+      const { data } = await axiosApi.get(
+        `properties/?page=${page}`
+      );
       return data;
     }
   } catch (error) {

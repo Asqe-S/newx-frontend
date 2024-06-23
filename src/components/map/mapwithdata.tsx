@@ -11,6 +11,7 @@ import { X } from "lucide-react";
 
 const MapWithData = ({ data }: { data: TProperty[] }) => {
   const [selected, setSelected] = useState({ latitude: "", longitude: "" });
+  const [hover, setHover] = useState({ latitude: "", longitude: "" });
   const { theme } = useTheme();
   const coordinates = data.map((field) => ({
     longitude: parseFloat(field.longitude),
@@ -46,11 +47,28 @@ const MapWithData = ({ data }: { data: TProperty[] }) => {
         {data.map((field) => (
           <div key={field.id}>
             <Marker
+              style={
+                hover.latitude === field.latitude
+                  ? { zIndex: "10" }
+                  : { zIndex: "0" }
+              }
               latitude={parseFloat(field.latitude)}
               longitude={parseFloat(field.longitude)}
             >
               <Button
+                onFocus={() => {
+                  setHover(field);
+                }}
+                onMouseEnter={() => {
+                  setHover(field);
+                }}
+                className={`hover:bg-background hover:text-foreground ${
+                  hover.latitude === field.latitude
+                    ? "bg-background text-foreground"
+                    : ""
+                }`}
                 onClick={() => {
+                  setHover({ latitude: "", longitude: "" });
                   setSelected(field);
                 }}
               >
@@ -64,7 +82,7 @@ const MapWithData = ({ data }: { data: TProperty[] }) => {
                 latitude={parseFloat(field.latitude)}
                 longitude={parseFloat(field.longitude)}
               >
-                <div className="relative bg-background text-foreground px-2 py-2 rounded-lg ">
+                <div className="relative bg-background text-foreground px-2 py-2 rounded-lg z-50 ">
                   <Button
                     size="btn-icon"
                     className="absolute rounded-full -top-4 -right-4"
@@ -74,15 +92,19 @@ const MapWithData = ({ data }: { data: TProperty[] }) => {
                   >
                     <X />
                   </Button>
-                  {field.photos.length>0 && <Carousel
+                  {field.photos.length > 0 && (
+                    <Carousel
                       photo={field.photos}
                       play
                       className="min-w-44 min-h-56  max-h-56"
-                    />}
-                  
+                    />
+                  )}
 
                   <div className=" ">
-                    <PropertyDetail field={field} link="/f" />
+                    <PropertyDetail
+                      field={field}
+                      link={`/merchant/property/${field.id}`}
+                    />
                   </div>
                 </div>
               </Popup>

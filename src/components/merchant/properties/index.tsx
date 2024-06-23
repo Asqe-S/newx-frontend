@@ -36,9 +36,25 @@ const Properties = () => {
     params.delete("modal");
     router.replace(`${pathname}?${params.toString()}`);
   };
+
+  const setPage = (page: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", page.toString());
+    router.replace(`${pathname}?${params.toString()}`);
+  };
+  const clearPage = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("modal");
+    router.replace(`${pathname}?${params.toString()}`);
+  };
+  let page = searchParams.get("page");
+  if (!page) {
+    page = '1';
+  }
+
   const { data, error, isLoading } = useQuery({
-    queryKey: ["fetchProperties"],
-    queryFn: () => fetchProperties(),
+    queryKey: [`fetchProperties${page}`],
+    queryFn: () => fetchProperties({ page: page }),
     retry: 2,
     staleTime: 60 * 1000,
   });
@@ -55,6 +71,14 @@ const Properties = () => {
 
   if (isLoading) return <Loading />;
   if (error) return <UserError />;
+  let { count, next, previous, results } = data;
+  if (process.env.NEXT_PUBLIC_NO_OF_ITEMS) {
+    const item = parseInt(process.env.NEXT_PUBLIC_NO_OF_ITEMS);
+    if (item) {
+      count = Math.ceil(count / item);
+    }
+  }
+
   return (
     <>
       <div className="flex justify-end me-3 mb-3">
@@ -68,11 +92,11 @@ const Properties = () => {
         </Button>
       </div>
 
-      {data.length < 1 && <EmptyProperty />}
-      {data.length >= 1 && (
+      {count < 1 && <EmptyProperty />}
+      {count >= 1 && (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-            {data.map((field: TProperty, index: number) => (
+            {results.map((field: TProperty, index: number) => (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -123,11 +147,42 @@ const Properties = () => {
               </Button>
             </div>
             <div className="w-11/12 h-screen mx-auto py-2">
-              <MapWithData data={data} />
+              <MapWithData data={results} />
             </div>
           </Modal>
         </>
       )}
+
+      <Button
+        disabled={page === "1"}
+        onClick={() => {
+          setPage(parseInt(page) - 1);
+        }}
+      >
+        previous
+      </Button>
+
+      {count > 1 &&
+        Array.from(Array(count).keys()).map((number) => (
+          <Button
+            disabled={number+1 === parseInt(page)}
+            key={number}
+            onClick={() => {
+              setPage(number + 1);
+            }}
+          >
+            {number + 1}
+          </Button>
+        ))}
+
+      <Button
+        disabled={page === count.toString()}
+        onClick={() => {
+          setPage(parseInt(page) + 1);
+        }}
+      >
+        Next
+      </Button>
 
       <Modal isOpen={searchParams.get("modal") === "add_property"}>
         <AddProperty close={clearParams} mutationQuery={addProperties} />
